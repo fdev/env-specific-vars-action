@@ -8,7 +8,6 @@ Determine variables based on a specified environment.
 - uses: fdev/env-specific-vars-action@v1
   with:
     environment: production
-    export: true
   env:
     DEFAULT_API_URL: https://dev.api.example.org
     ACCEPTANCE_API_URL: https://acc.api.example.org
