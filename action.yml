@@ -1,0 +1,13 @@
+name: "Environment Variables Action"
+description: "Determine environment variables based on a specified target environment"
+inputs:
+  environment:
+    description: "Name of the environment (e.g. acceptance or production)"
+    required: true
+  export:
+    description: "Should variables be exported as environment variables"
+    required: false
+    default: "true"
+runs:
+  using: "node12"
+  main: "index.js"
