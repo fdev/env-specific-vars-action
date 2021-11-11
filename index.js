@@ -1,6 +1,6 @@
 'use strict'
 
-import { exportVariable, getBooleanInput, getInput, info, setOutput } from '@actions/core'
+import { exportVariable, getBooleanInput, getInput, info, setFailed, setOutput } from '@actions/core'
 
 /**
  * Iterates over properties of `object`, returning an object with all elements
@@ -35,21 +35,26 @@ function getVariables(environment) {
  * Entrypoint of the action.
  */
 async function run() {
-  const environment = getInput('environment')
-  const shouldExport = getBooleanInput('export')
+  try {
+    const environment = getInput('environment', { required: true })
+    const shouldExport = getBooleanInput('export')
 
-  info(`Determine variables for environment ${environment}`)
+    info(`Determine variables for environment ${environment}`)
 
-  const vars = getVariables(environment)
-  Object.entries(vars).forEach(([key, value]) => {
-    setOutput(key, value)
-  })
-
-  if (shouldExport) {
-    info(`Exporting as environment variables`)
+    const vars = getVariables(environment)
     Object.entries(vars).forEach(([key, value]) => {
-      exportVariable(key, value)
+      setOutput(key, value)
     })
+
+    if (shouldExport) {
+      info(`Exporting as environment variables`)
+      Object.entries(vars).forEach(([key, value]) => {
+        exportVariable(key, value)
+      })
+    }
+  }
+  catch (err) {
+    setFailed(err.message)
   }
 }
 
