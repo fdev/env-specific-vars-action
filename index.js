@@ -40,8 +40,8 @@ async function run() {
     const shouldExport = core.getBooleanInput('export')
 
     core.info(`Determine variables for environment ${environment}`)
-
     const vars = getVariables(environment)
+
     Object.entries(vars).forEach(([key, value]) => {
       core.setOutput(key, value)
     })
@@ -49,9 +49,11 @@ async function run() {
     if (shouldExport) {
       core.info(`Exporting as environment variables`)
       Object.entries(vars).forEach(([key, value]) => {
-        core. exportVariable(key, value)
+        core.exportVariable(key, value)
       })
     }
+
+    core.info(JSON.stringify(vars, null, 2))
   }
   catch (err) {
     core.setFailed(err.message)

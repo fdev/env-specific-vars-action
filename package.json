@@ -1,0 +1,15 @@
+{
+  "name": "env-specific-vars-action",
+  "version": "1.0.0",
+  "description": "Determine variables based on a specified environment.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fdev/env-specific-vars-action.git"
+  },
+  "author": "Folkert de Vries",
+  "homepage": "https://github.com/fdev/env-specific-vars-action",
+  "dependencies": {
+    "@actions/core": "^1.6.0"
+  }
+}
