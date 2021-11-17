@@ -1,6 +1,6 @@
 'use strict'
 
-import { exportVariable, getBooleanInput, getInput, info, setFailed, setOutput } from '@actions/core'
+const core = require('@actions/core')
 
 /**
  * Iterates over properties of `object`, returning an object with all elements
@@ -36,30 +36,28 @@ function getVariables(environment) {
  */
 async function run() {
   try {
-    const environment = getInput('environment', { required: true })
-    const shouldExport = getBooleanInput('export')
+    const environment = core.getInput('environment', { required: true })
+    const shouldExport = core.getBooleanInput('export')
 
-    info(`Determine variables for environment ${environment}`)
+    core.info(`Determine variables for environment ${environment}`)
 
     const vars = getVariables(environment)
     Object.entries(vars).forEach(([key, value]) => {
-      setOutput(key, value)
+      core.setOutput(key, value)
     })
 
     if (shouldExport) {
-      info(`Exporting as environment variables`)
+      core.info(`Exporting as environment variables`)
       Object.entries(vars).forEach(([key, value]) => {
-        exportVariable(key, value)
+        core. exportVariable(key, value)
       })
     }
   }
   catch (err) {
-    setFailed(err.message)
+    core.setFailed(err.message)
   }
 }
 
 if (require.main === module) {
   run()
 }
-
-export default run;
